@@ -13,7 +13,7 @@ Concat multiple pdfs using pdfunite in node.js.
 ## Usage
 
 ```coffee
-pdfconcat = require './pdfconcat'
+pdfconcat = require 'pdfconcat'
 
 pdfconcat ['input_1.pdf', 'input_2.pdf'], 'output.pdf', (err) ->
 
