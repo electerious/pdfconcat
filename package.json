@@ -1,6 +1,6 @@
 {
   "name": "pdfconcat",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Concat multiple pdfs using pdfunite",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,12 @@
     "pdfunite",
     "unite"
   ],
-  "author": "Tobias Reich",
+  "authors": [
+    "Tobias Reich <tobias.reich.ich@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/electerious/pdfconcat.git"
+  },
   "license": "MIT"
 }
