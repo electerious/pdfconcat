@@ -1,0 +1,21 @@
+{
+  "name": "pdfconcat",
+  "version": "1.0.0",
+  "description": "Concat multiple pdfs using pdfunite",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pdf",
+    "concat",
+    "poppler",
+    "wrapper",
+    "merge",
+    "add",
+    "pdfunite",
+    "unite"
+  ],
+  "author": "Tobias Reich",
+  "license": "MIT"
+}
