@@ -7,35 +7,38 @@
   process = require('child_process');
 
   escapeshell = function(cmd) {
-    return '"' + cmd.replace(/(["\s'$`\\])/g, '\\$1') + '"';
+    return '"' + cmd.replace(/(["'$`\\])/g, '\\$1') + '"';
   };
 
-  module.exports = function(input, output, callback) {
-    var err, inputStr, pdfunite;
-    inputStr = '';
-    if ((input == null) || (output == null) || (callback == null) || input.length === 0 || output.length === 0) {
+  module.exports = function(photo, callback) {
+    var err, zbarimg;
+    if ((photo == null) || (callback == null) || photo.length === 0) {
       err = new Error('Missing parameter');
-      callback(err);
+      callback(err, null);
       return false;
     }
-    if (!Array.isArray(input)) {
-      err = new Error('Parameter `input` must be an Array');
-      callback(err);
-      return false;
-    }
-    input.forEach(function(item) {
-      return inputStr += escapeshell(item) + ' ';
-    });
-    pdfunite = process.exec("pdfunite " + inputStr + " " + output, function(err, stdout, stderr) {
+    photo = escapeshell(photo);
+    return zbarimg = process.exec("zbarimg " + photo + " -q", function(err, stdout, stderr) {
       if (err != null) {
-        callback(err);
+        callback(err, null);
         return false;
       }
-    });
-    return pdfunite.on('exit', function(code) {
-      if (code === 0) {
-        callback(null);
-        return true;
+      if (stdout != null) {
+        if (stdout.indexOf('QR-Code:') !== -1) {
+          stdout = stdout.replace('QR-Code:', '');
+          stdout = stdout.slice(0, -2);
+          callback(null, stdout);
+          return true;
+        } else {
+          err = new Error('No QR-Code found or barcode not supported');
+          callback(err, null);
+          return false;
+        }
+      }
+      if (stderr != null) {
+        err = new Error(stderr);
+        callback(err, null);
+        return false;
       }
     });
   };

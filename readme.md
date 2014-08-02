@@ -1,22 +1,24 @@
-# pdfconcat
+# zbarimg
 
-Concat multiple pdfs using `pdfunite` in node.js. This module is a wrapper around the `pdfunite` command from [Poppler](http://poppler.freedesktop.org).
+Scan photos using `zbarimg` in node.js. This module is a wrapper around the `zbarimg` command from [ZBar bar code reader](http://zbar.sourceforge.net).
+
+The module is only made and tested with QR-Codes!
 
 ## Installation
 
-	npm install pdfconcat
+	npm install zbarimg
 	
 ## Requirements
 
-[Poppler](http://poppler.freedesktop.org) must be installed on your system. Make sure the command `pdfunite` is working.
+[ZBar bar code reader](http://zbar.sourceforge.net) must be installed on your system. Make sure the command `zbarimg` is working.
 	
 ## Usage
 
 ```coffee
-pdfconcat = require 'pdfconcat'
+zbarimg = require 'zbarimg'
 
-pdfconcat ['input_1.pdf', 'input_2.pdf'], 'output.pdf', (err) ->
+zbarimg 'photo.png', (err, code) ->
 
-	# Your Code
+	console.log code
 ```
 
