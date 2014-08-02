@@ -1,28 +1,21 @@
 {
-  "name": "zbarimg",
-  "version": "1.0.8",
-  "description": "Scan photos using ZBar in node",
+  "name": "pdfconcat",
+  "version": "1.0.0",
+  "description": "Concat multiple pdfs using pdfunite",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "scan",
-    "qr",
-    "image",
-    "photo",
-    "detect",
-    "zbar",
-    "code",
-    "zbarimg",
-    "bar"
+    "pdf",
+    "concat",
+    "poppler",
+    "wrapper",
+    "merge",
+    "add",
+    "pdfunite",
+    "unite"
   ],
-  "authors": [
-    "Tobias Reich <tobias.reich.ich@gmail.com>"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/electerious/zbarimg.git"
-  },
+  "author": "Tobias Reich",
   "license": "MIT"
 }
