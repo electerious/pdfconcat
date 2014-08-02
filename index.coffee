@@ -3,47 +3,51 @@ process	= require 'child_process'
 
 escapeshell = (cmd) ->
 
-	return '"' + cmd.replace(/(["'$`\\])/g,'\\$1') + '"';
+	return '"' + cmd.replace(/(["\s'$`\\])/g,'\\$1') + '"';
 
-module.exports = (photo, callback) ->
+module.exports = (input, output, callback) ->
+
+	inputStr = ''
 
 	# Catch missing parameter
-	if	not photo? or
+	if	not input? or
+		not output? or
 		not callback? or
-		photo.length is 0
+		input.length is 0 or
+		output.length is 0
 
 			err = new Error 'Missing parameter'
-			callback err, null
+			callback err
 			return false
 
-	# Escape
-	photo = escapeshell photo
 
-	# Run zbarimg
-	zbarimg = process.exec "zbarimg #{ photo } -q", (err, stdout, stderr) ->
+	# Catch wrong type for input
+	if not Array.isArray(input)
+
+		err = new Error 'Parameter `input` must be an Array'
+		callback err
+		return false
+
+	# Array to String
+	input.forEach (item) ->
+
+		# Escape for shell
+		inputStr += escapeshell(item) + ' '
+
+	# Run pdfunite
+	pdfunite = process.exec "pdfunite #{ inputStr } #{ output }", (err, stdout, stderr) ->
 
 		if err?
 
-			callback err, null
+			callback err
 			return false
 
-		if stdout?
+	# Catch exit
+	pdfunite.on 'exit', (code) ->
 
-			if stdout.indexOf('QR-Code:') isnt -1
+		# Only when successfull
+		# Callback already called on error in process.exec
+		if code is 0
 
-				stdout = stdout.replace 'QR-Code:', '' # Remove type
-				stdout = stdout.slice 0, -2 # Remove \n
-				callback null, stdout
-				return true
-
-			else
-
-				err = new Error 'No QR-Code found or barcode not supported'
-				callback err, null
-				return false
-
-		if stderr?
-
-			err = new Error stderr
-			callback err, null
-			return false
+			callback null
+			return true
