@@ -1,6 +1,4 @@
-> WARNING: This module has been deprecated.
-
-# pdfconcat
+# [Deprecated] pdfconcat
 
 Concat multiple pdfs using `pdfunite` in node.js. This module is a wrapper around the `pdfunite` command from [Poppler](http://poppler.freedesktop.org).
 
